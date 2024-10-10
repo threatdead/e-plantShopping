@@ -9,7 +9,13 @@ function ProductList() {
   const [addedToCart, setAddedToCart] = useState(false);
   const dispatch = useDispatch();
 
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartItems = useSelector((state) => state.cart.items);
+  console.log(cartItems);
+
+  const totalItems = () => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
   const plantsArray = [
     {
       category: "Air Purifying Plants",
@@ -282,8 +288,7 @@ function ProductList() {
     setShowCart(false); // Hide the cart when navigating to About Us
   };
 
-  const handleContinueShopping = (e) => {
-    e.preventDefault();
+  const handleContinueShopping = () => {
     setShowCart(false);
   };
 
@@ -319,6 +324,7 @@ function ProductList() {
             {" "}
             <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}>
               <h1 className="cart">
+                <label className="cart_quantity_count">{totalItems()}</label>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 256 256"
